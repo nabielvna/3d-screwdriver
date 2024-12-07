@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="assets/screwdriver.ico" type="image/x-icon">
+    <title>Screwdriver</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="w-full h-screen overflow-hidden">
+    <button id="togglePanel" class="fixed top-4 right-4 z-20 py-2 px-4 w-28 bg-zinc-900/90 text-xs text-white rounded hover:bg-gray-600">
+        Hide Panel
+    </button>
+
+    <div id="controlPanel" class="fixed top-16 right-4 z-10 p-4 rounded-lg border border-zinc-600 bg-zinc-900/90 w-56 text-xs text-gray-200">
+
+        <div class="w-full flex justify-center">
+            <h2 class="text-base font-bold tracking-widest">CONTROLS</h2>
+        </div>
+
+        <div class="border-t border-gray-500 my-4"></div>
+    
+        <div class="flex flex-col gap-y-6">
+            <!-- Grid & axes -->
+            <div>
+                <details>
+                    <summary class="cursor-pointer text-sm font-medium flex items-center gap-x-2 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-grid-3x3"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+                        Grid & Axes Visibility
+                    </summary>
+                    <div class="mt-2">
+                        <button id="gridToggle" class="w-full py-2 bg-gray-700 text-white mb-1 rounded hover:bg-gray-600">
+                            Hide Grid
+                        </button>
+                        <button id="axesToggle" class="w-full py-2 bg-gray-700 text-white rounded hover:bg-gray-600">
+                            Hide Axes
+                        </button>
+                    </div>
+                </details>
+            </div>
+    
+            <!-- Rotation -->
+            <div>
+                <details>
+                    <summary class="cursor-pointer text-sm font-medium flex items-center gap-x-2 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rotate-3d"><path d="M16.466 7.5C15.643 4.237 13.952 2 12 2 9.239 2 7 6.477 7 12s2.239 10 5 10c.342 0 .677-.069 1-.2"/><path d="m15.194 13.707 3.814 1.86-1.86 3.814"/><path d="M19 15.57c-1.804.885-4.274 1.43-7 1.43-5.523 0-10-2.239-10-5s4.477-5 10-5c4.838 0 8.873 1.718 9.8 4"/></svg>
+                        Rotation Controls
+                    </summary>
+                    <div class="mt-2">
+                        <div class="mb-2">
+                            <label class="block font-medium mb-1">X Rotation</label>
+                            <input type="range" id="rotateX" min="0" max="360" value="0" class="w-full">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block font-medium mb-1">Y Rotation</label>
+                            <input type="range" id="rotateY" min="0" max="360" value="0" class="w-full">
+                        </div>
+                        <div class="mb-2">
+                            <label class="block font-medium mb-1">Z Rotation</label>
+                            <input type="range" id="rotateZ" min="0" max="360" value="0" class="w-full">
+                        </div>
+                        <div class="mb-2">
+                            <button id="autoRotateToggle" class="w-full py-2 bg-gray-700 text-white mb-1 rounded hover:bg-gray-600">
+                                Enable Auto-Rotate
+                            </button>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="rotateXCheckbox" class="form-checkbox">
+                                <label for="rotateXCheckbox" class="text-xs">X Axis</label>
+                                <input type="checkbox" id="rotateYCheckbox" class="form-checkbox">
+                                <label for="rotateYCheckbox" class="text-xs">Y Axis</label>
+                                <input type="checkbox" id="rotateZCheckbox" class="form-checkbox">
+                                <label for="rotateZCheckbox" class="text-xs">Z Axis</label>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
+    
+            <!-- Scale -->
+            <div>
+                <details>
+                    <summary class="cursor-pointer text-sm font-medium flex items-center gap-x-2 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-expand"><path d="m21 21-6-6m6 6v-4.8m0 4.8h-4.8"/><path d="M3 16.2V21m0 0h4.8M3 21l6-6"/><path d="M21 7.8V3m0 0h-4.8M21 3l-6 6"/><path d="M3 7.8V3m0 0h4.8M3 3l6 6"/></svg>
+                        Scale Controls
+                    </summary>
+                    <div class="mt-2">
+                        <div class="mb-2">
+                            <label class="block font-medium mb-1">Scale</label>
+                            <input type="range" id="scale" min="0.5" max="3" step="0.1" value="1" class="w-full">
+                        </div>
+                    </div>
+                </details>
+            </div>
+    
+            <!-- Camera Presets -->
+            <div>
+                <details>
+                    <summary class="cursor-pointer text-sm font-medium flex items-center gap-x-2 hover:underline">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                        Camera Presets
+                    </summary>
+                    <div class="mt-4 grid grid-cols-2 gap-2">
+                        <button id="presetTop" class="py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-600 flex items-center justify-center gap-x-1">
+                            Top
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+                        </button>
+                        <button id="presetBottom" class="py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-600 flex items-center justify-center gap-x-1">
+                            Bottom
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-down"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>
+                        </button>
+                        <button id="presetFront" class="py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-600 flex items-center justify-center gap-x-1">
+                            Front
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </button>
+                        <button id="presetCorner" class="py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-600 flex items-center justify-center gap-x-1">
+                            Corner
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                        </button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    
+        <div class="border-t border-gray-500 my-4"></div>
+    
+        <div class="w-full flex flex-col items-center">
+            <p class="text-xs">Vidiawan Nabiel Arrasyid</p>
+            <p class="text-xs">5025221231</p>
+        </div>
+
+        <div class="border-t border-gray-500 my-4"></div>
+    
+        <div class="w-full">
+            <p class="text-xs text-center mb-2">Screwdriver Reference</p>
+            <div class="w-full flex justify-center">
+                <span class="text-center"><a href="https://youtu.be/Y34XnjVn724?si=NrVKLft0VXIs8fm-" class="text-xs hover:underline">How to model a screwdriver in Blender</a>
+                <a href="https://www.youtube.com/@3d-illusions" class="text-xs hover:underline">(3d illusions)</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" class="relative">    
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
