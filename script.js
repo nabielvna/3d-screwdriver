@@ -202,10 +202,20 @@ function animate() {
         model.rotation.x %= (Math.PI * 2);
         model.rotation.y %= (Math.PI * 2);
         model.rotation.z %= (Math.PI * 2);
+
+        updateRotationSliders();
     }
 
     controls.update();
     renderer.render(scene, camera);
+}
+
+function updateRotationSliders() {
+    if (model) {
+        document.getElementById('rotateX').value = THREE.MathUtils.radToDeg(model.rotation.x);
+        document.getElementById('rotateY').value = THREE.MathUtils.radToDeg(model.rotation.y);
+        document.getElementById('rotateZ').value = THREE.MathUtils.radToDeg(model.rotation.z);
+    }
 }
 
 function onWindowResize() {
